@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>House Price Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&family=Playwrite+AU+SA:wght@100..400&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h1>House Price Predictor</h1>
+        <form id="prediction-form">
+            <label>Mainroad: <input type="text" name="mainroad" placeholder="Enter 'yes' or 'no'"></label>
+            <label>Guestroom: <input type="text" name="guestroom" placeholder="Enter 'yes' or 'no'"></label>
+            <label>Basement: <input type="text" name="basement" placeholder="Enter 'yes' or 'no'"></label>
+            <label>Hot-water-heating: <input type="text" name="hotwaterheating"
+                    placeholder="Enter 'yes' or 'no'"></label>
+            <label>Air-conditioning: <input type="text" name="airconditioning"
+                    placeholder="Enter 'yes' or 'no'"></label>
+            <label>Pref-area: <input type="text" name="prefarea" placeholder="Enter 'yes' or 'no'"></label>
+            <label>Furnishing-status: <input type="text" name="furnishingstatus"
+                    placeholder="Enter 'furnished', 'semi-furnished', or 'unfurnished'"></label>
+            <label>Area: <input type="text" name="area" placeholder="Enter area in square feet"></label>
+            <label>Bedrooms: <input type="text" name="bedrooms" placeholder="Enter number of bedrooms"></label>
+            <label>Bathrooms: <input type="text" name="bathrooms" placeholder="Enter number of bathrooms"></label>
+            <label>Stories: <input type="text" name="stories" placeholder="Enter number of stories"></label>
+            <label>Parking: <input type="text" name="parking" placeholder="Enter parking capacity"></label>
+            <button type="submit">Predict Price</button>
+        </form>
+
+        <form action="/graphs" method="GET" class="graph_button">
+            <button type="submit">View Graphs</button>
+        </form>
+    </div>
+
+    <!-- Popup and Overlay -->
+    <div id="overlay"></div>
+    <div id="popup">
+        <h2>Predicted Price</h2>
+        <p id="price"></p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('prediction-form').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(event.target);
+
+            // Send the form data to the server
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            // Display the predicted price in the popup
+            if (data.price) {
+                document.getElementById('price').innerText = data.price;
+                document.getElementById('popup').style.display = 'block';
+                document.getElementById('overlay').style.display = 'block';
+            } else {
+                alert('Error: ' + (data.error || 'Unknown error'));
+            }
+        });
+
+        // Close the popup
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
