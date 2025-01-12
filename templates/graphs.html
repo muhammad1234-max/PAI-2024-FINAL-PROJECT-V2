@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Graphs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&family=Playwrite+AU+SA:wght@100..400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .grid-item {
+            text-align: center;
+            border: 2px solid black;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .headings {
+            text-align: center;
+            font-family: "Playwrite AU SA", serif;
+            font-size: 400;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="headings">Graphs</h1>
+
+    <div class="grid-container">
+        <div class="grid-item">
+            <h2 class="headings">Distribution of Bedrooms</h2>
+            <img src="data:image/png;base64,{{ image_data_bedrooms }}" alt="Distribution of Bedrooms">
+        </div>
+
+        <div class="grid-item">
+            <h2 class="headings">Boxplot of Price</h2>
+            <img src="data:image/png;base64,{{ image_data_price_boxplot }}" alt="Boxplot of Price">
+        </div>
+
+        <div class="grid-item">
+            <h2 class="headings">Price vs. Area</h2>
+            <img src="data:image/png;base64,{{ image_data_price_vs_area }}" alt="Price vs Area">
+        </div>
+
+        <div class="grid-item">
+            <h2 class="headings">Correlation Heatmap</h2>
+            <img src="data:image/png;base64,{{ image_data_correlation }}" alt="Correlation Heatmap">
+        </div>
+    </div>
+
+</body>
+
+</html>
